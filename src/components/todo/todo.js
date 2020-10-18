@@ -4,7 +4,8 @@ import TodoList from './list.js';
 
 import './todo.scss';
 function ToDo(props) {
-  const [list,setList] = useState([])
+  const [list,setList] = useState([]);
+  const [count,setCount] = useState(0)
 
  const addItem = (item) => {
     item._id = Math.random();
@@ -33,7 +34,13 @@ function ToDo(props) {
     ];
 
     setList(list);
-  },[])
+  },[]);
+  useEffect(() => {
+    // Update the document title using the browser API
+    let count = list.filter(item => !item.complete).length
+    document.title = `You clicked ${count} times`;
+    setCount(count)
+  });
 
 
 
