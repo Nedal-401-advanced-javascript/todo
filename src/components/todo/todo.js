@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import TodoForm from './form.js';
 import TodoList from './list.js';
-
+import { Navbar, Container } from "react-bootstrap";
 import './todo.scss';
 function ToDo(props) {
   const [list,setList] = useState([]);
@@ -42,15 +42,15 @@ function ToDo(props) {
     setCount(count)
   });
 
-
-
   return (
     <>
-      <header>
+    <Container>
+
+      <Navbar className="counterNav" bg="dark" variant="dark">
         <h2>
         There are {list.filter(item => !item.complete).length} Items To Complete
         </h2>
-      </header>
+      </Navbar>
 
       <section className="todo">
 
@@ -58,13 +58,14 @@ function ToDo(props) {
           <TodoForm handleSubmit={addItem} />
         </div>
 
-        <div>
+        <div className='TodoList'>
           <TodoList
             list={list}
             handleComplete={toggleComplete}
-          />
+            />
         </div>
       </section>
+    </Container>
     </>
   );
 }
