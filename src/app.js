@@ -1,14 +1,17 @@
-import React from 'react';
-import Header from './components/header/header'
-import ToDo from './components/todo/todo-connected';
-const App =()=>{
-    return(
+import React from "react";
+import Header from "./components/header/header";
+import ToDo from "./components/todo/todo-connected";
+import SiteContext from "./context/settings/context";
 
+const App = () => {
+  return (
     <>
-        <Header/>
-        <ToDo/>
+      <Header />
+      <SiteContext>
+        <ToDo />
+      </SiteContext>
     </>
-    )
-}
+  );
+};
 
 export default App;
