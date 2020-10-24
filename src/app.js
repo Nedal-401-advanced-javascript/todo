@@ -39,13 +39,10 @@ const EditLink = (props) => {
 const App = () => {
   return (
     <>
-        <Header />
-        <hr />
-      <AuthContext>
-        <DeleteLink />
-        <ReadLink />
-        <EditLink />
-      </AuthContext>
+      <Header />
+      <SiteContext>
+        <ToDo />
+      </SiteContext>
     </>
   );
 };

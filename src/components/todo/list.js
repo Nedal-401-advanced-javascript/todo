@@ -4,7 +4,7 @@ import { SiteContext } from "../../context/settings/context";
 
 function TodoList(props) {
   const settingContext = useContext(SiteContext); // {display,items,sort,setDisplay,setItems,setSort}
-  console.log(settingContext.items, "<<<>>>>><><><><><");
+  console.log(props.list, "<<<>>>>><><><><><");
   return (
     <ListGroup className="tasksList">
       {props.list.map((item) => (

@@ -4,7 +4,7 @@ import TodoForm from "./form.js";
 import TodoList from "./list.js";
 import { Navbar, Container, Pagination, Button } from "react-bootstrap";
 import { SiteContext } from "../../context/settings/context";
-import axios from 'axios'
+import axios from "axios";
 import "./todo.scss";
 //https://api-js401.herokuapp.com/api/v1/todo
 const ToDo = () => {
@@ -12,6 +12,7 @@ const ToDo = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const settingContext = useContext(SiteContext); // {display,items,sort,setDisplay,setItems,setSort}
   const todoAPI = "https://todonedaltasks.herokuapp.com/api/v1/todo";
+  // const todoAPI = "https://api-js401.herokuapp.com/api/v1/todo";
 
   const _addItem = (item) => {
     item.due = new Date();
@@ -29,7 +30,7 @@ const ToDo = () => {
       .catch(console.error);
   };
 
-  const _toggleComplete = (id) => {
+  const _toggleComplete = (id) => {               //there is a problem in this functionality --> update the complete after two clicks
     let item = list.filter((i) => i._id === id)[0] || {};
 
     if (item._id) {
@@ -46,11 +47,10 @@ const ToDo = () => {
       })
         .then((response) => response.json())
         .then((savedItem) => {
-          setList(
-            list.map((listItem) =>
-              listItem._id === item._id ? savedItem : listItem
-            )
-          );
+          let newList= list.map((listItem) =>
+          listItem._id === item._id ? savedItem : listItem
+        )
+          setList([...newList]);
         })
         .catch(console.error);
     }
@@ -66,21 +66,43 @@ const ToDo = () => {
       .catch(console.error);
   };
   // todoAPI, {params: {ID: 12345}
-    const _delTodoItems = (id) => {
-      axios.delete(`${todoAPI}/${id}`)
-      .then(setList([...list])) //need to be auto updated 
+  const _delTodoItems = (id) => {
+    axios
+      .delete(`${todoAPI}/${id}`)
+      .then(setList([...list])) //need to be auto updated
+      .then(_getTodoItems)
       .catch(console.error);
   };
-  const _sortTasks = (data) => {
-    console.log(data,'receved here');
-    let sorted = data.sort((a, b) => b.difficulty - a.difficulty);
-    setList(sorted);
+  const _sortTasks = () => {
+    console.log(list, "receved here");
+    let sortType = settingContext.sort;
+    console.log(settingContext.sort);
+    switch (sortType) {
+      case "difficulty":
+        let sorted = list.sort((a, b) => b.difficulty - a.difficulty);
+        setList([...sorted]);
+        break;
+
+      default:
+        setList(list);
+        break;
+    }
+    // setCurrentPage(1)
+    console.log(list, "receved here");
+  };
+  const _showCompletedTasks = () => {
+    
+    let completed = settingContext.display ? list.filter((task) => task.complete ) : list.filter((task) => !task.complete )
+    setList([...completed]);
   };
   useEffect(_getTodoItems, []);
+  useEffect(_sortTasks, [settingContext.sort]);
+  useEffect(_showCompletedTasks, [settingContext.display]);
 
   // Get current posts
   const indexOfLastTask = currentPage * settingContext.items;
   const indexOfFirstTask = indexOfLastTask - settingContext.items;
+  console.log(list);
   const currentItems = list.slice(indexOfFirstTask, indexOfLastTask);
   let items = [];
   for (let i = 1; i <= Math.ceil(list.length / settingContext.items); i++) {
@@ -102,7 +124,14 @@ const ToDo = () => {
             There are {list.filter((item) => !item.complete).length} Items To
             Complete
           </h2>
-          <Button onClick={_sortTasks}>Sort by difficulty</Button>
+          <Button onClick={() => settingContext.setSort("difficulty")}>
+            Sort by difficulty
+          </Button>
+          <Button
+            onClick={() => settingContext.setDisplay(!settingContext.display)}
+          >
+            Uncompleted Tasks
+          </Button>
         </Navbar>
 
         <section className="todo">
@@ -111,16 +140,19 @@ const ToDo = () => {
           </div>
 
           <div className="TodoList">
-            <TodoList list={currentItems} handleComplete={_toggleComplete} handleDelete={_delTodoItems} />
+            <TodoList
+              list={currentItems}
+              handleComplete={_toggleComplete}
+              handleDelete={_delTodoItems}
+            />
           </div>
         </section>
       </Container>
-      <Pagination >
+      <Pagination>
         <Pagination.Prev />
         {items}
         <Pagination.Next />
       </Pagination>
-
     </>
   );
 };
