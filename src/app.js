@@ -20,7 +20,9 @@ const DeleteLink = (props) => {
 const ReadLink = (props) => {
   return (
     <Auth action="read">
-      <span>Fake Read Link </span>
+      <SiteContext>
+        <ToDo />
+      </SiteContext>
     </Auth>
   );
 };
@@ -28,16 +30,18 @@ const ReadLink = (props) => {
 const EditLink = (props) => {
   return (
     <Auth action="edit">
-      <span>Fake Edit Link </span>
+      <SiteContext>
+        <ToDo />
+      </SiteContext>
     </Auth>
   );
 };
 const App = () => {
   return (
     <>
-      <AuthContext>
         <Header />
         <hr />
+      <AuthContext>
         <DeleteLink />
         <ReadLink />
         <EditLink />
