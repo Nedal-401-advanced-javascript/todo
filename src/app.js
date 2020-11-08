@@ -39,10 +39,16 @@ const EditLink = (props) => {
 const App = () => {
   return (
     <>
-      <Header />
-      <SiteContext>
-        <ToDo />
-      </SiteContext>
+      <AuthContext>
+        <Header />
+        <Auth action="read">
+          <h1>authorized</h1>
+        </Auth>
+
+        <SiteContext>
+          <ToDo />
+        </SiteContext>
+      </AuthContext>
     </>
   );
 };

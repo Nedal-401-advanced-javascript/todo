@@ -19,6 +19,9 @@ function Header() {
       <Nav className="mr-auto">
         <Nav.Link href="#home">Home</Nav.Link>
       </Nav>
+      <Login>
+        
+      </Login>
     </Navbar>
   );
 }

@@ -62,7 +62,10 @@ const ToDo = () => {
       mode: "cors",
     })
       .then((data) => data.json())
-      .then((data) => setList(data))
+      .then((data) => {
+        setList(data)
+        console.log(data,'<<<<<<<<<<<<<<<<<<<');
+      })
       .catch(console.error);
   };
   // todoAPI, {params: {ID: 12345}
