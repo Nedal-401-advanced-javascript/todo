@@ -8,8 +8,8 @@ function Settings(props) {
   // Default sort field (string)
   // You may manually set (hard code) those state settings in the context provider during development
   const [display, setDisplay] = useState("Hide");
-  const [items, setItems] = useState(4);
-  const [sort, setSort] = useState("string");
+  const [items, setItems] = useState(6);
+  const [sort, setSort] = useState("id");
 
   const state = {
     display,
@@ -20,6 +20,7 @@ function Settings(props) {
     setSort,
   };
 
+  console.log('calling context')
   return (
     <SiteContext.Provider value={state}>{props.children}</SiteContext.Provider>
   );
