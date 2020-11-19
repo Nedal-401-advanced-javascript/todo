@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import useForm from '../hooks/useForm'
 import { Button,Jumbotron,Container,FormControl,FormGroup,FormLabel,Form } from 'react-bootstrap';
 
 
 function TodoForm(props) {
 const [handleInputChange, handleSubmit, item] = useForm(props.handleSubmit)
+console.log(item);
   return (
     <>
       <Container className="p-3">
