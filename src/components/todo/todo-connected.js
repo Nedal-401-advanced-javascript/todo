@@ -7,13 +7,12 @@ import { SiteContext } from "../../context/settings/context";
 import Auth from "../../context/auth/auth";
 import axios from "axios";
 import "./todo.scss";
-//https://api-js401.herokuapp.com/api/v1/todo
+
 const ToDo = () => {
   const [list, setList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const settingContext = useContext(SiteContext); // {display,items,sort,setDisplay,setItems,setSort}
   const todoAPI = "https://todonedaltasks.herokuapp.com/api/v1/todo";
-  // const todoAPI = "https://api-js401.herokuapp.com/api/v1/todo";
 
   const _addItem = (item) => {
     item.due = new Date();
@@ -34,7 +33,6 @@ const ToDo = () => {
   const _toggleComplete = (id) => {
     //there is a problem in this functionality --> update the complete after two clicks
     let item = list.filter((i) => i._id === id)[0] || {};
-
     if (item._id) {
       item.complete = !item.complete;
 
@@ -52,8 +50,9 @@ const ToDo = () => {
           let newList = list.map((listItem) =>
             listItem._id === item._id ? savedItem : listItem
           );
-          setList([...newList]);
+          setList(newList);
         })
+        .then(_getTodoItems)
         .catch(console.error);
     }
   };
@@ -66,7 +65,6 @@ const ToDo = () => {
       .then((data) => data.json())
       .then((data) => {
         setList(data);
-        console.log(data, "<<<<<<<<<<<<<<<<<<<");
       })
       .catch(console.error);
   };
@@ -81,7 +79,6 @@ const ToDo = () => {
   const _sortTasks = () => {
     console.log(list, "receved here");
     let sortType = settingContext.sort;
-    console.log(settingContext.sort);
     switch (sortType) {
       case "difficulty":
         let sorted = list.sort((a, b) => b.difficulty - a.difficulty);
@@ -92,8 +89,6 @@ const ToDo = () => {
         setList(list);
         break;
     }
-    // setCurrentPage(1)
-    console.log(list, "receved here");
   };
   const _showCompletedTasks = () => {
     let completed = settingContext.display
