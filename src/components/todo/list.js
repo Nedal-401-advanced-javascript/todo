@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import { ListGroup, Button, Badge } from "react-bootstrap";
-import { SiteContext } from "../../context/settings/context";
 
 function TodoList(props) {
-  const settingContext = useContext(SiteContext); // {display,items,sort,setDisplay,setItems,setSort}
+  // const settingContext = useContext(SiteContext); // {display,items,sort,setDisplay,setItems,setSort}
   return (
     <ListGroup className="tasksList">
       {props.list.map((item) => (
