@@ -4,15 +4,15 @@ import TodoForm from "./form.js";
 import TodoList from "./list.js";
 import { Navbar, Container, Pagination, Button } from "react-bootstrap";
 import { SiteContext } from "../../context/settings/context";
+import Auth from "../../context/auth/auth";
 import axios from "axios";
 import "./todo.scss";
-//https://api-js401.herokuapp.com/api/v1/todo
+
 const ToDo = () => {
   const [list, setList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const settingContext = useContext(SiteContext); // {display,items,sort,setDisplay,setItems,setSort}
   const todoAPI = "https://todonedaltasks.herokuapp.com/api/v1/todo";
-  // const todoAPI = "https://api-js401.herokuapp.com/api/v1/todo";
 
   const _addItem = (item) => {
     item.due = new Date();
@@ -30,9 +30,9 @@ const ToDo = () => {
       .catch(console.error);
   };
 
-  const _toggleComplete = (id) => {               //there is a problem in this functionality --> update the complete after two clicks
+  const _toggleComplete = (id) => {
+    //there is a problem in this functionality --> update the complete after two clicks
     let item = list.filter((i) => i._id === id)[0] || {};
-
     if (item._id) {
       item.complete = !item.complete;
 
@@ -47,11 +47,12 @@ const ToDo = () => {
       })
         .then((response) => response.json())
         .then((savedItem) => {
-          let newList= list.map((listItem) =>
-          listItem._id === item._id ? savedItem : listItem
-        )
-          setList([...newList]);
+          let newList = list.map((listItem) =>
+            listItem._id === item._id ? savedItem : listItem
+          );
+          setList(newList);
         })
+        .then(_getTodoItems)
         .catch(console.error);
     }
   };
@@ -63,8 +64,7 @@ const ToDo = () => {
     })
       .then((data) => data.json())
       .then((data) => {
-        setList(data)
-        console.log(data,'<<<<<<<<<<<<<<<<<<<');
+        setList(data);
       })
       .catch(console.error);
   };
@@ -79,7 +79,6 @@ const ToDo = () => {
   const _sortTasks = () => {
     console.log(list, "receved here");
     let sortType = settingContext.sort;
-    console.log(settingContext.sort);
     switch (sortType) {
       case "difficulty":
         let sorted = list.sort((a, b) => b.difficulty - a.difficulty);
@@ -90,12 +89,11 @@ const ToDo = () => {
         setList(list);
         break;
     }
-    // setCurrentPage(1)
-    console.log(list, "receved here");
   };
   const _showCompletedTasks = () => {
-    
-    let completed = settingContext.display ? list.filter((task) => task.complete ) : list.filter((task) => !task.complete )
+    let completed = settingContext.display
+      ? list.filter((task) => task.complete)
+      : list.filter((task) => !task.complete);
     setList([...completed]);
   };
   useEffect(_getTodoItems, []);
@@ -138,24 +136,29 @@ const ToDo = () => {
         </Navbar>
 
         <section className="todo">
-          <div>
-            <TodoForm handleSubmit={_addItem} />
-          </div>
-
-          <div className="TodoList">
-            <TodoList
-              list={currentItems}
-              handleComplete={_toggleComplete}
-              handleDelete={_delTodoItems}
-            />
-          </div>
+          <Auth action="edit">
+            <div>
+              <TodoForm handleSubmit={_addItem} />
+            </div>
+          </Auth>
+          <Auth action="read">
+            <div className="TodoList">
+              <TodoList
+                list={currentItems}
+                handleComplete={_toggleComplete}
+                handleDelete={_delTodoItems}
+              />
+            </div>
+          </Auth>
         </section>
       </Container>
-      <Pagination>
-        <Pagination.Prev />
-        {items}
-        <Pagination.Next />
-      </Pagination>
+      <Auth action="read">
+        <Pagination className="pagination">
+          <Pagination.Prev />
+          {items}
+          <Pagination.Next />
+        </Pagination>
+      </Auth>
     </>
   );
 };

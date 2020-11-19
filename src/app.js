@@ -41,8 +41,9 @@ const App = () => {
     <>
       <AuthContext>
         <Header />
-        <Auth action="read">
-          <h1>authorized</h1>
+        
+        <Auth action="delete">
+          <h1>admin</h1>
         </Auth>
 
         <SiteContext>
