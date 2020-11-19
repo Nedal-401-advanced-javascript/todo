@@ -153,7 +153,7 @@ const ToDo = () => {
         </section>
       </Container>
       <Auth action="read">
-        <Pagination>
+        <Pagination className="pagination">
           <Pagination.Prev />
           {items}
           <Pagination.Next />

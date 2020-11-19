@@ -1,110 +1,143 @@
 @import "~bootstrap/scss/bootstrap";
 
-
-.counterNav{
-    margin: 1em 3em;
-    h2 {
-        color:#eee;
-    }
+.counterNav {
+  margin: 1em 3em;
+  h2 {
+    color: #eee;
+  }
 }
-body, html {
-    height: 100%;
-    margin: 0;
-    padding:0;
-    width: 100%;
+body,
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 .todo-details {
-    display:flex;
-    flex-direction:column;
+  display: flex;
+  flex-direction: column;
 
-    header {
-        display:flex;
-        flex-direction:row;
-        justify-content:space-between;
-        padding:.5em 1em;
-    }
+  header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0.5em 1em;
+  }
 
-    .item {
-        flex:1;
-        padding: 1em;
-    }
-
+  .item {
+    flex: 1;
+    padding: 1em;
+  }
 }
-
+.pagination{
+    width: max-content;
+    margin: auto;
+}
 .todo {
-    display:flex;
-    flex-direction:row;
-    justify-content: flex-start;
-    margin: 2em;
-    
-    form {
-        
-        display:flex;
-        flex-direction:column;
-        margin-right: 2em;
-        
-        label {
-            display: flex;
-            flex-direction:column;
-            margin-bottom: 1em;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin: 2em;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    margin-right: 2em;
+
+    label {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1em;
+    }
+  }
+  .TodoList {
+    width: 67%;
+  }
+  .tasksList {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    li {
+        font-size: .75em;
+        margin: 0.75em 0.5em;
+        background: #e0e0e0;
+
+      &:hover {
+        background: #f5f2f2;
+      }
+           
+      .badge-true {
+        background: seagreen;
+      }
+      .badge-false {
+        background: rgb(235, 190, 44);
+        max-height: max-content;
+      }
+      .headertask {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        Button {
+          // background-color: rgb(223, 53, 104);
+          padding: 0 5px;
         }
+      }
+      .task {
+        text-align: center;
+        // border: 2px solid black;
+        font-size:1.5em;
+        padding: 10px;
+      }
     }
-    .TodoList{
+    // li {
+    //   align-items: center;
+    //   padding: 0;
+    //   text-align: center;
+    //   // display:flex;
+    //   // flex-direction:row;
+    //   // font-size: .75em;
+    //   margin: 0.75em 0.5em;
 
-        width: 67%;
-    }
-    .tasksList {
-        list-style-type:none;
-        margin:0;
-        padding:0;
-        
-        li {
-            
-            align-items: center;
-            padding: 0;
-            text-align: center;
-            display:flex;
-            flex-direction:row;
-            // font-size: .75em;
-            margin: .75em .5em;
-            
-            &.complete-true {
-                span {
-                    background: seagreen;
-                    
-                text-decoration:line-through;
-                &:hover {
-                    
-                   background: seagreen;
-                }
-              }
-            }
+    //   &.complete-true {
+    //     span {
+    //       background: seagreen;
 
-            span {
-                background: #e0e0e0;
+    //       text-decoration: line-through;
+    //       &:hover {
+    //         background: seagreen;
+    //       }
+    //     }
 
-                cursor:pointer;
-                &:hover {
-                    background: pink;
-                }
-            }
-             span, input {
-                width: 100%;
-                 border: .5px solid #eee;
-                 display:inline-block;
-                 padding: 0.7em;
-             }
+    //     .badge-false {
+    //         background: rgb(235, 190, 44);
+    //       }
 
-            button {
-                background: transparent;
-                border:none;
-                color:blue;
-                cursor:pointer;
-                padding:0;
-                margin: 0 .75em;
-            }
+    //   }
 
-        }
-    }
+    //   span {
+    //     background: #e0e0e0;
 
+    //     cursor: pointer;
+    //     &:hover {
+    //       background: pink;
+    //     }
+    //   }
+    //   span,
+    //   input {
+    //     width: 100%;
+    //     border: 0.5px solid #eee;
+    //     display: inline-block;
+    //     padding: 0.7em;
+    //   }
+
+    //   button {
+    //     background: transparent;
+    //     border: none;
+    //     color: blue;
+    //     cursor: pointer;
+    //     padding: 0;
+    //     margin: 0 0.75em;
+    //   }
+    // }
+  }
 }
